@@ -1,5 +1,3 @@
-package SnakeGame;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -27,27 +25,28 @@ public class SnakeGame extends JPanel implements ActionListener {
     private boolean inGame = true;
 
     public SnakeGame() {
-        setBackground(Color.BLUE);
+        setBackground(Color.WHITE);
         loadImage();
         initGame();
         addKeyListener(new FieldKeyListener());
         setFocusable(true);
+        requestFocusInWindow();
     }
 
     public void loadImage() {
-        ImageIcon imageIconApple = new ImageIcon(getClass().getResource("SnakeGame/apple.png"));
+        ImageIcon imageIconApple = new ImageIcon(getClass().getResource("apple.png"));
         apple = imageIconApple.getImage();
-        ImageIcon imageIconDot = new ImageIcon(getClass().getResource("SnakeGame/dot.png"));
+        ImageIcon imageIconDot = new ImageIcon(getClass().getResource("dot.png"));
         dot = imageIconDot.getImage();
     }
 
     public void initGame() {
         dots = 3;
         for (int i = 0; i < dots; i++) {
-            x[i] = 48 - i * DOT_SIZE;
+            x[i] = 48 - i * 16;
             y[i] = 48;
         }
-        timer = new Timer(250, this);
+        timer = new Timer(150, this);
         timer.start();
 
         createApple();
@@ -56,8 +55,8 @@ public class SnakeGame extends JPanel implements ActionListener {
     }
 
     public void createApple() {
-        appleX = new Random().nextInt(20) * DOT_SIZE;
-        appleY = new Random().nextInt(20) * DOT_SIZE;
+        appleX = new Random().nextInt(20) * 16;
+        appleY = new Random().nextInt(20) * 16;
     }
 
     public void move() {
@@ -83,13 +82,13 @@ public class SnakeGame extends JPanel implements ActionListener {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         if (inGame) {
-            g.drawImage(apple, appleX, appleY, DOT_SIZE, DOT_SIZE, this);
+            g.drawImage(apple, appleX, appleY, 16, 16, this);
             for (int i = 0; i < dots; i++) {
-                g.drawImage(dot, x[i], y[i], DOT_SIZE, DOT_SIZE, this);
+                g.drawImage(dot, x[i], y[i], 16, 16, this);
             }
         } else {
             String gameOver = "Game Over";
-            g.setColor(Color.GREEN);
+            g.setColor(Color.PINK);
             g.drawString(gameOver, 125, SIZE / 2);
         }
     }
